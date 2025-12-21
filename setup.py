@@ -4,23 +4,28 @@ distributing Python projects. It is used by setuptools
 (or distutils in older Python versions) to define the configuration 
 of your project, such as its metadata, dependencies, and more
 '''
+# conda activate "C:\Users\ashis\Desktop\Machine Learning\ml\Projects\NetworkSecurity\venv" to activate venv
 
-
-from setuptools import find_packages, setup 
+from setuptools import find_packages,setup
+# find_packages it will find the __init__.py and make the parent folder as package
+#  setup it give the information about project
 from typing import List
 
-def get_requirements()-> List[str]:
+def get_requirements()->List[str]:
     """
     This function will return list of requirements
-
+    
     """
     requirement_lst:List[str]=[]
     try:
         with open('requirements.txt','r') as file:
-            lines= file.readlines()
+            #Read lines from the file
+            lines=file.readlines()
+            ## Process each line
             for line in lines:
-                requirement = line.strip()
-                if requirement and requirement!= '-e .':
+                requirement=line.strip()
+                ## ignore empty lines and -e .
+                if requirement and requirement!= '-e .': 
                     requirement_lst.append(requirement)
     except FileNotFoundError:
         print("requirements.txt file not found")
@@ -30,8 +35,8 @@ def get_requirements()-> List[str]:
 setup(
     name="NetworkSecurity",
     version="0.0.1",
-    author="Ashish Prajapati",
-    author_email= "ashishofficial12321@gmail.com",
+    author="Ashish Prajapayi",
+    author_email="ashishofficial12321@gmail.com",
     packages=find_packages(),
     install_requires=get_requirements()
 )
