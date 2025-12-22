@@ -17,7 +17,7 @@ import pymongo
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
 
-class NetworkDataExtract():  
+class NetworkDataExtract():  # this is responsible for ETL pipeline
     def __init__(self):
         try:
             pass
