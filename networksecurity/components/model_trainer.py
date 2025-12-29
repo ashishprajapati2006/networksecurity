@@ -27,10 +27,12 @@ from sklearn.ensemble import (
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
         try:
-            self.model_trainer_config = model_trainer_config
-            self.data_transformation_artifact = data_transformation_artifact
+            self.model_trainer_config=model_trainer_config
+            self.data_transformation_artifact=data_transformation_artifact
         except Exception as e:
             raise NetworkSecurityException(e,sys)
+        
+
         
     def train_model(self,X_train,y_train,x_test,y_test):
         models = {
@@ -65,33 +67,36 @@ class ModelTrainer:
                 'learning_rate':[.1,.01,.001],
                 'n_estimators': [8,16,32,64,128,256]
             }
+            
         }
-        model_report:dict= evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
-                                           models=models,param=params)
+        model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
+                                          models=models,param=params)
         
         ## To get best model score from dict
         best_model_score = max(sorted(model_report.values()))
 
         ## To get best model name from dict
+
         best_model_name = list(model_report.keys())[
             list(model_report.values()).index(best_model_score)
         ]
         best_model = models[best_model_name]
-        y_train_pred = best_model.predict(X_train)
+        y_train_pred=best_model.predict(X_train)
 
-        classification_train_metric = get_classification_score(y_true=y_train,y_pred=y_train_pred)
+        classification_train_metric=get_classification_score(y_true=y_train,y_pred=y_train_pred)
 
 
-        y_test_pred= best_model.predict(x_test)
-        classification_test_metric = get_classification_score(y_true=y_test,y_pred=y_test_pred)
+        y_test_pred=best_model.predict(x_test)
+        classification_test_metric=get_classification_score(y_true=y_test,y_pred=y_test_pred)
 
-        preprocessor = load_object(file_path=self.model_trainer_config.trained_model_file_path)
-
+        preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
+            
         model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
         os.makedirs(model_dir_path,exist_ok=True)
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
+        
 
         ## Model Trainer Artifact
         model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
@@ -100,7 +105,8 @@ class ModelTrainer:
                              )
         logging.info(f"Model trainer artifact: {model_trainer_artifact}")
         return model_trainer_artifact
-    
+
+
 
     def initiate_model_trainer(self)->ModelTrainerArtifact:
         try:
@@ -124,5 +130,3 @@ class ModelTrainer:
             
         except Exception as e:
             raise NetworkSecurityException(e,sys)
-
-
