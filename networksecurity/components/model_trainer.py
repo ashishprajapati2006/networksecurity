@@ -26,8 +26,9 @@ from sklearn.ensemble import (
     RandomForestClassifier,
 )
 import mlflow
-# from urllib.parse import urlparse
 
+import dagshub
+dagshub.init(repo_owner='ashishprajapati2006', repo_name='networksecurity', mlflow=True)
 
 
 
@@ -39,38 +40,21 @@ class ModelTrainer:
         except Exception as e:
             raise NetworkSecurityException(e,sys)
         
-    # def track_mlflow(self,best_model,classificationmetric):
-    #     with mlflow.start_run():
-    #         f1_score=classificationmetric.f1_score
-    #         precision_score=classificationmetric.precision_score
-    #         recall_score=classificationmetric.recall_score
-
-    #         mlflow.log_metric("f1_score",f1_score)
-    #         mlflow.log_metric("precision",precision_score)
-    #         mlflow.log_metric("recall_score",recall_score)
-    #         mlflow.sklearn.log_model(best_model,name="model")
-
-    def track_mlflow(self, best_model, train_metric, test_metric):
-    # ❌ set_experiment mat use karo
-    # mlflow.set_experiment("NetworkSecurity")
+    def track_mlflow(self,best_model,classificationmetric):
         with mlflow.start_run():
+            f1_score=classificationmetric.f1_score
+            precision_score=classificationmetric.precision_score
+            recall_score=classificationmetric.recall_score
 
-            # ---- Metrics ----
-            mlflow.log_metric("train_f1", train_metric.f1_score)
-            mlflow.log_metric("train_precision", train_metric.precision_score)
-            mlflow.log_metric("train_recall", train_metric.recall_score)
-
-            mlflow.log_metric("test_f1", test_metric.f1_score)
-            mlflow.log_metric("test_precision", test_metric.precision_score)
-            mlflow.log_metric("test_recall", test_metric.recall_score)
-
-            # ---- Model ----
-            mlflow.sklearn.log_model(
-                sk_model=best_model,
-                name="model"
+            mlflow.log_metric("f1_score",f1_score)
+            mlflow.log_metric("precision",precision_score)
+            mlflow.log_metric("recall_score",recall_score)
+            mlflow.sklearn.log_model(best_model,name="model")
+            # ---- Artifact (THIS MAKES IT SHOW IN DAGS HUB) ----
+            mlflow.log_artifact(
+                "Artifacts",
+                artifact_path="artifacts"
             )
-
-
 
 
         
@@ -126,20 +110,13 @@ class ModelTrainer:
         classification_train_metric=get_classification_score(y_true=y_train,y_pred=y_train_pred)
         
         ## Track the experiements with mlflow
-        # self.track_mlflow(best_model,classification_train_metric)
+        self.track_mlflow(best_model,classification_train_metric)
 
 
         y_test_pred=best_model.predict(x_test)
         classification_test_metric=get_classification_score(y_true=y_test,y_pred=y_test_pred)
 
-        # self.track_mlflow(best_model,classification_test_metric)
-
-        self.track_mlflow(
-            best_model=best_model,
-            train_metric=classification_train_metric,
-            test_metric=classification_test_metric
-        )
-
+        self.track_mlflow(best_model,classification_test_metric)
 
         preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
             
@@ -147,8 +124,10 @@ class ModelTrainer:
         os.makedirs(model_dir_path,exist_ok=True)
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
-        save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
+        save_object(self.model_trainer_config.trained_model_file_path,obj=Network_Model)
 
+        #model pusher
+        save_object("final_model/model.pkl",best_model)
 
         
 

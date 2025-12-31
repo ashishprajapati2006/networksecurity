@@ -1,0 +1,36 @@
+[ 2025-12-31 00:05:08,306 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[ 2025-12-31 00:05:08,306 ] 107 dagshub - INFO - Accessing as ashishprajapati2006
+[ 2025-12-31 00:05:09,462 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/ashishprajapati2006/networksecurity "HTTP/1.1 200 OK"
+[ 2025-12-31 00:05:10,554 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[ 2025-12-31 00:05:10,558 ] 107 dagshub - INFO - Initialized MLflow to track repo "ashishprajapati2006/networksecurity"
+[ 2025-12-31 00:05:10,561 ] 107 dagshub - INFO - Repository ashishprajapati2006/networksecurity initialized!
+[ 2025-12-31 00:05:10,561 ] 20 root - INFO - Initiate the data ingestion
+[ 2025-12-31 00:05:20,122 ] 62 root - INFO - Performed train test split on the dataframe
+[ 2025-12-31 00:05:20,122 ] 64 root - INFO - Exited split_data_as_train_test method of Data_Ingestion class
+[ 2025-12-31 00:05:20,122 ] 72 root - INFO - Exporting train and test file path.
+[ 2025-12-31 00:05:20,170 ] 81 root - INFO - Exported train and test file path.
+[ 2025-12-31 00:05:20,170 ] 22 root - INFO - Data Initiation Completed
+[ 2025-12-31 00:05:20,170 ] 27 root - INFO - Initiate the data Validation
+[ 2025-12-31 00:05:20,264 ] 32 root - INFO - Required number of columns:2
+[ 2025-12-31 00:05:20,264 ] 33 root - INFO - Daata frame has columns:31
+[ 2025-12-31 00:05:20,264 ] 32 root - INFO - Required number of columns:2
+[ 2025-12-31 00:05:20,264 ] 33 root - INFO - Daata frame has columns:31
+[ 2025-12-31 00:05:20,370 ] 29 root - INFO - data Validation Completed
+[ 2025-12-31 00:05:20,370 ] 33 root - INFO - data Transformation started
+[ 2025-12-31 00:05:20,370 ] 53 root - INFO - Entered initiate_data_transformation method of DataTransformation class
+[ 2025-12-31 00:05:20,370 ] 55 root - INFO - Starting data transformation
+[ 2025-12-31 00:05:20,370 ] 38 root - INFO - Entered git_data_transformer_object method of Transformation class
+[ 2025-12-31 00:05:20,370 ] 43 root - INFO - Initialise KNNImputrt with {'missing_values': nan, 'n_neighbors': 3, 'weights': 'uniform'}
+[ 2025-12-31 00:05:20,397 ] 46 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-12-31 00:05:20,399 ] 50 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-12-31 00:05:20,399 ] 46 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-12-31 00:05:20,402 ] 50 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-12-31 00:05:20,403 ] 37 root - INFO - data Transformation completed
+[ 2025-12-31 00:05:20,403 ] 39 root - INFO - Model Training stared
+[ 2025-12-31 00:09:33,470 ] 868 urllib3.connectionpool - WARNING - Retrying (Retry(total=6, connect=7, read=7, redirect=7, status=7)) after connection broken by 'SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2384)')': /ashishprajapati2006/networksecurity.mlflow/api/2.0/mlflow-artifacts/artifacts/f0561d299ff841acab82f4c9b16912f8/models/m-ea8dbd3b0b9a42de83a91204dd13a234/artifacts/model.pkl
+[ 2025-12-31 00:10:55,081 ] 868 urllib3.connectionpool - WARNING - Retrying (Retry(total=5, connect=7, read=7, redirect=7, status=7)) after connection broken by 'SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2384)')': /ashishprajapati2006/networksecurity.mlflow/api/2.0/mlflow-artifacts/artifacts/f0561d299ff841acab82f4c9b16912f8/models/m-ea8dbd3b0b9a42de83a91204dd13a234/artifacts/model.pkl
+[ 2025-12-31 00:11:38,422 ] 868 urllib3.connectionpool - WARNING - Retrying (Retry(total=4, connect=7, read=6, redirect=7, status=7)) after connection broken by 'ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)': /ashishprajapati2006/networksecurity.mlflow/api/2.0/mlflow-artifacts/artifacts/f0561d299ff841acab82f4c9b16912f8/models/m-ea8dbd3b0b9a42de83a91204dd13a234/artifacts/model.pkl
+[ 2025-12-31 00:12:18,895 ] 46 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-12-31 00:12:18,896 ] 50 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-12-31 00:12:18,897 ] 162 root - INFO - Model trainer artifact: ModelTrainerArtifact(trained_model_file_path='Artifacts\\12_31_2025_00_05_04\\model_trainer\\trained_model\\model.pkl', train_metric_artifact=ClassificationMetricArtifact(f1_score=0.9908998988877654, precision_score=0.9881024400080661, recall_score=0.9937132427499493), test_metric_artifact=ClassificationMetricArtifact(f1_score=0.9741935483870968, precision_score=0.9633173843700159, recall_score=0.9853181076672104))
+[ 2025-12-31 00:12:18,897 ] 44 root - INFO - Model Training artifact created
